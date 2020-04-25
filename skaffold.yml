@@ -1,0 +1,39 @@
+apiVersion: skaffold/v2beta2
+kind: Config
+
+build:
+  artifacts:
+  - image: akervern/code-server-base
+    context: code-server-base
+    docker: {}
+  - image: akervern/code-server-java
+    context: code-server-java
+    docker: {}
+  - image: akervern/project-code-server
+    context: studio-code-server
+    docker: {}
+test:
+  - image: akervern/project-code-server
+    structureTests:
+      - ./tests/code-server.yml
+      - ./tests/code-server-java.yml
+      - ./tests/project-code-server.yml
+  - image: akervern/code-server-java
+    structureTests:
+      - ./tests/code-server-java.yml
+      - ./tests/code-server.yml
+
+
+deploy: {}
+
+profiles:
+  - name: dev
+    activation:
+      - command: dev
+    build:
+      local: {
+        push: false
+      }
+      tagPolicy:
+        envTemplate:
+          template: "{{.IMAGE_NAME}}:latest"

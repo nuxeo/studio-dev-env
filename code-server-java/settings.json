@@ -1,0 +1,42 @@
+{
+  "files.exclude": {
+    "**/.classpath": true,
+    "**/.project": true,
+    "**/.settings": true,
+    "**/.factorypath": true,
+    ".vscode": true,
+  },
+  "java.configuration.runtimes": [
+    {
+      "name": "JavaSE-11",
+      "path": "/usr/local/openjdk-11",
+      "default": true,
+    },
+    {
+      "name": "JavaSE-1.8",
+      "path": "/usr/local/openjdk-8",
+    }
+  ],
+  "java.test.config": [
+    {
+      "vmargs": [
+        "-Dsun.zip.disableMemoryMapping=true",
+        "-XX:+UseConcMarkSweepGC",
+        "-XX:MinHeapFreeRatio=10",
+        "-XX:MaxHeapFreeRatio=90",
+        "-XX:GCTimeRatio=4",
+        "-XX:AdaptiveSizePolicyWeight=90",
+        "-XX:+UnlockExperimentalVMOptions",
+        "-XX:+UseCGroupMemoryLimitForHeap",
+        "-XX:MaxRAMFraction=3"
+      ]
+    },
+  ],
+  "java.saveActions.organizeImports": true,
+  "search.useGlobalIgnoreFiles": true,
+  "files.autoSave": "onFocusChange",
+  "files.autoSaveDelay": 500,
+  "editor.defaultFormatter": "redhat.java",
+  "editor.wordWrap": "on",
+  "terminal.integrated.shell.linux": "/bin/bash"
+}
