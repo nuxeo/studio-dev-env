@@ -1,0 +1,10 @@
+schemaVersion: '2.0.0'
+metadataTest:
+  exposedPorts: ['8080']
+commandTests:
+  - name: 'I AM Theia!'
+    command: 'whoami'
+    expectedOutput: ['theia']
+  - name: 'Theia user can write file in /home/thiea/.theia'
+    command: 'touch'
+    args: ['/home/theia/.theia/test-file']

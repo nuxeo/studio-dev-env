@@ -32,7 +32,7 @@ RUN apt-get update \
   vim \
   && rm -rf /var/lib/apt/lists/*
 
-RUN adduser --gecos '' --disabled-password coder && \
+RUN adduser --gecos '' --disabled-password --shell /bin/bash coder && \
   echo "coder ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/nopasswd
 
 # Copy other JDK
@@ -46,12 +46,14 @@ RUN curl -SsL https://github.com/boxboat/fixuid/releases/download/v0.4/fixuid-0.
   printf "user: coder\ngroup: coder\n" > /etc/fixuid/config.yml
 
 # Copy codde-server
-COPY --from=codeserver /usr/local/lib/code-server /usr/local/lib/code-server
+COPY --from=codeserver /usr/lib/code-server /usr/local/lib/code-server
 COPY --from=codeserver --chown=coder:coder /home/coder/.local/share/code-server/ /home/coder/.local/share/code-server/
-RUN ln -s /usr/local/lib/code-server/code-server /usr/local/bin/code-server
+RUN ln -s /usr/local/lib/code-server/bin/code-server /usr/local/bin/code-server
 
 # Add settings
 RUN mkdir -p /home/coder/project/.vscode && chown -R coder:coder /home/coder/project
 ADD --chown=coder:coder settings.json /home/coder/project/.vscode/settings.json
 
 VOLUME ["/home/coder/.local/share/code-server/User"]
+
+HEALTHCHECK CMD curl --fail http://localhost:8080/ || exit 1

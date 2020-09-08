@@ -1,0 +1,21 @@
+schemaVersion: '2.0.0'
+metadataTest:
+  exposedPorts: ['8080']
+commandTests:
+  - name: 'I AM Coder!'
+    command: 'whoami'
+    expectedOutput: ['coder']
+  - name: 'Code server Java extensions installed'
+    command: 'code-server'
+    args: ['--list-extensions']
+    expectedOutput:
+      [
+        'redhat.java',
+        'vscjava.vscode-java-debug',
+        'vscjava.vscode-java-dependency',
+        'vscjava.vscode-java-test',
+        'vscjava.vscode-maven',
+      ]
+  - name: 'Coder can create files in project folder'
+    command: 'touch'
+    args: ['/home/coder/project/test-file']

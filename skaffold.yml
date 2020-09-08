@@ -3,26 +3,43 @@ kind: Config
 
 build:
   artifacts:
-  - image: akervern/code-server-base
-    context: code-server-base
-    docker: {}
-  - image: akervern/code-server-java
-    context: code-server-java
-    docker: {}
-  - image: akervern/project-code-server
-    context: studio-code-server
-    docker: {}
+    - image: akervern/code-server-base
+      context: code-server-base
+      docker: {}
+    - image: akervern/code-server-java
+      context: code-server-java
+      docker: {}
+    - image: akervern/project-code-server
+      context: project-code-server
+      docker: {}
+    - image: akervern/theia-base
+      context: theia-base
+      docker: {}
+    - image: akervern/theia-java
+      context: theia-java
+      docker: {}
+    - image: akervern/project-theia
+      context: project-theia
+      docker: {}
 test:
   - image: akervern/project-code-server
     structureTests:
+      - ./tests/base-java.yml
       - ./tests/code-server.yml
-      - ./tests/code-server-java.yml
-      - ./tests/project-code-server.yml
+      - ./tests/code-server-project.yml
   - image: akervern/code-server-java
     structureTests:
-      - ./tests/code-server-java.yml
       - ./tests/code-server.yml
-
+      - ./tests/core-server-java.yml
+  - image: akervern/theia-java
+    structureTests:
+      - ./tests/theia.yml
+      - ./tests/theia-java.yml
+  - image: akervern/project-theia
+    structureTests:
+      - ./tests/theia.yml
+      - ./tests/theia-java.yml
+      - ./tests/theia-project.yml
 
 deploy: {}
 
@@ -31,9 +48,7 @@ profiles:
     activation:
       - command: dev
     build:
-      local: {
-        push: false
-      }
+      local: { push: false }
       tagPolicy:
         envTemplate:
-          template: "{{.IMAGE_NAME}}:latest"
+          template: '{{.IMAGE_NAME}}:latest'

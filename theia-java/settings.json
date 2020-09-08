@@ -1,22 +1,21 @@
 {
-  "java.semanticHighlighting.enabled": true,
   "files.exclude": {
     "*/studio/.metadata": true,
     "**/.classpath": true,
     "**/.project": true,
     "**/.settings": true,
     "**/.factorypath": true,
-    ".vscode": true,
+    ".theia": true,
   },
   "java.configuration.runtimes": [
     {
       "name": "JavaSE-11",
-      "path": "/usr/local/openjdk-11",
-      "default": true,
+      "path": "/opt/openjdk/java-11",
+      "default": true
     },
     {
       "name": "JavaSE-1.8",
-      "path": "/usr/local/openjdk-8",
+      "path": "/opt/ibm/java"
     }
   ],
   "java.test.config": [
@@ -39,8 +38,5 @@
   "files.autoSaveDelay": 500,
   "editor.defaultFormatter": "redhat.java",
   "editor.wordWrap": "on",
-  "terminal.integrated.shell.linux": "/bin/bash",
-  "git.autofetch": true,
-  "maven.terminal.useJavaHome": true,
-  "java.home": "/usr/local/openjdk-11"
+  "terminal.integrated.shell.linux": "/bin/bash"
 }
