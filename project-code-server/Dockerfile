@@ -1,3 +1,5 @@
+FROM akervern/project-base as base
+
 # Final Image
 FROM akervern/code-server-base:latest
 
@@ -10,11 +12,14 @@ ENV GIT_USER_EMAIL=devnull@nuxeo.com
 ENV GIT_USER_NAME=${USERNAME}
 ENV EXTENSIONS=
 
+COPY --from=base --chown=coder:coder /docker-entrypoint.sh /
+COPY --from=base --chown=coder:coder /docker-entrypoint-init.d /docker-entrypoint-init.d/
+
 USER coder
-ADD --chown=coder:coder entrypoint.sh /entrypoint.sh
 
 VOLUME [ "/home/coder/.m2/repository" ]
 WORKDIR /home/coder
 EXPOSE 8080
 
-ENTRYPOINT ["/entrypoint.sh"]
+COPY 99-start-ide.sh /docker-entrypoint-init.d/
+ENTRYPOINT ["/docker-entrypoint.sh"]

@@ -34,7 +34,8 @@ COPY --from=codeserver --chown=coder:coder /home/coder/.local/share/code-server/
 RUN ln -s /usr/local/lib/code-server/bin/code-server /usr/local/bin/code-server
 
 # Add settings
-RUN mkdir -p /home/coder/project/.vscode && chown -R coder:coder /home/coder/project
+RUN mkdir -p /home/coder/project/.vscode && chown -R coder:coder /home/coder/project \
+  && mkdir -p /home/coder/.m2 && chown -R coder:coder /home/coder/.m2
 ADD --chown=coder:coder settings.json /home/coder/project/.vscode/settings.json
 
 VOLUME ["/home/coder/.local/share/code-server/User"]

@@ -2,6 +2,7 @@
 
 # Build dev base image
 docker build -t akervern/dev-base dev-base
+docker build -t akervern/project-base project-base
 
 # build base image
 # docker build -t akervern/code-server-base code-server-base

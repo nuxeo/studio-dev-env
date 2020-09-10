@@ -20,7 +20,8 @@ ENV SHELL=/bin/bash \
 RUN mkdir -p /home/theia/.theia && chown -R theia:theia /home/theia/.theia
 VOLUME ["/home/theia/.theia"]
 
-RUN mkdir -p /home/project/.theia && chown -R theia:theia /home/project
-ADD --chown=theia:theia settings.json /home/project/.theia/settings.json
+RUN mkdir -p /home/theia/project/.theia && chown -R theia:theia /home/theia/project/ \
+  && mkdir -p /home/theia/.m2 && chown -R theia:theia /home/theia/.m2
+ADD --chown=theia:theia settings.json /home/theia/project/.theia/settings.json
 
 HEALTHCHECK CMD curl --fail http://localhost:8080/ || exit 1

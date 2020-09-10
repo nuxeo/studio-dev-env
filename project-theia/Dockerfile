@@ -1,3 +1,5 @@
+FROM akervern/project-base as base
+
 # Final Image
 FROM akervern/theia-base:latest
 
@@ -9,11 +11,14 @@ ENV TOKEN=tmp-pwd
 ENV GIT_USER_EMAIL=devnull@nuxeo.com
 ENV GIT_USER_NAME=${USERNAME}
 
+COPY --from=base --chown=theia:theia /docker-entrypoint.sh /
+COPY --from=base --chown=theia:theia /docker-entrypoint-init.d /docker-entrypoint-init.d/
+
 USER theia
-ADD --chown=theia:theia entrypoint.sh /entrypoint.sh
 
 VOLUME [ "/home/theia/.m2/repository" ]
 WORKDIR /home/theia
 EXPOSE 8080
 
-ENTRYPOINT ["/entrypoint.sh"]
+COPY 99-start-ide.sh /docker-entrypoint-init.d/
+ENTRYPOINT ["/docker-entrypoint.sh"]

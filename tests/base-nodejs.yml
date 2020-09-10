@@ -12,3 +12,7 @@ commandTests:
     command: 'yarn'
     args: ['--version']
     expectedOutput: ['1.*']
+  - name: 'Nuxeo CLI installed'
+    command: 'nuxeo'
+    args: ['-n', '--help']
+    expectedOutput: ['Usage: nuxeo *']

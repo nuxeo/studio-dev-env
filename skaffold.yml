@@ -6,6 +6,9 @@ build:
     - image: akervern/dev-base
       context: dev-base
       docker: {}
+    - image: akervern/project-base
+      context: project-base
+      docker: {}
     - image: akervern/code-server-base
       context: code-server-base
       docker: {}

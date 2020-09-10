@@ -32,4 +32,3 @@ ENV MAVEN_HOME /usr/share/maven
 
 # Install NPM Dependencies
 RUN npm install -g nuxeo-cli yarn
-
