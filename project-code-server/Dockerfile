@@ -1,5 +1,5 @@
 # Final Image
-FROM akervern/code-server-java:latest
+FROM akervern/code-server-base:latest
 
 # NOS Image related
 ENV CONNECT_URL=https://connect.nuxeo.com/nuxeo

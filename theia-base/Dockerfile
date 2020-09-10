@@ -1,22 +1,26 @@
-FROM ibmjava:8-sdk as java-base
+FROM akervern/theia-builder:latest AS theia
 
-FROM node:10
-COPY --from=java-base /opt/ibm/java /opt/ibm/java
+FROM akervern/dev-base:latest
 
-ENV JAVA_HOME=/opt/ibm/java \
-    PATH=/opt/ibm/java/jre/bin:/opt/ibm/java/bin/:$PATH
-
-RUN apt-get update && \
-  apt-get install -y curl apt-transport-https maven gradle && \
-  curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
-  echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
-  apt-get update && apt-get install -y yarn && \
-  rm -rf /var/lib/apt/lists/*
-# See : https://github.com/theia-ide/theia-apps/issues/34
-RUN adduser --disabled-password --gecos '' theia
 RUN chmod g+rw /home && \
-    mkdir -p /home/project && \
-    chown -R theia:theia /home/theia && \
-    chown -R theia:theia /home/project;
-WORKDIR /home/theia
+  adduser -c '' --shell /bin/bash theia \
+  && mkdir -p /home/project \
+  && chown -R theia:theia /home/theia \
+  && chown -R theia:theia /home/project;
+
+COPY --chown=theia:theia --from=theia /usr/local/theia /home/theia
+
 USER theia
+
+WORKDIR /home/theia
+
+ENV SHELL=/bin/bash \
+  THEIA_DEFAULT_PLUGINS=local-dir:/home/theia/plugins
+
+RUN mkdir -p /home/theia/.theia && chown -R theia:theia /home/theia/.theia
+VOLUME ["/home/theia/.theia"]
+
+RUN mkdir -p /home/project/.theia && chown -R theia:theia /home/project
+ADD --chown=theia:theia settings.json /home/project/.theia/settings.json
+
+HEALTHCHECK CMD curl --fail http://localhost:8080/ || exit 1

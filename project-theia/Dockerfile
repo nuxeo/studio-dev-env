@@ -1,5 +1,5 @@
 # Final Image
-FROM akervern/theia-java:latest
+FROM akervern/theia-base:latest
 
 # NOS Image related
 ENV CONNECT_URL=https://connect.nuxeo.com/nuxeo
@@ -13,7 +13,7 @@ USER theia
 ADD --chown=theia:theia entrypoint.sh /entrypoint.sh
 
 VOLUME [ "/home/theia/.m2/repository" ]
-
+WORKDIR /home/theia
 EXPOSE 8080
 
 ENTRYPOINT ["/entrypoint.sh"]
