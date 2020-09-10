@@ -13,5 +13,5 @@ docker build -t akervern/theia-base theia-base
 # docker build -t akervern/code-server-java code-server-java
 
 # build project image
-# docker build -t akervern/project-code-server project-code-server
-docker build -t akervern/project-theia project-theia
+# docker build -t akervern/code-server-project code-server-project
+docker build -t akervern/theia-project theia-project

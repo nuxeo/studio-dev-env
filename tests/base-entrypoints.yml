@@ -1,0 +1,9 @@
+schemaVersion: '2.0.0'
+fileExistenceTests:
+  - name: 'entrypoint script'
+    path: '/docker-entrypoint.sh'
+    shouldExist: true
+    isExecutableBy: 'owner'
+  - name: 'entrypoint.d folder'
+    path: '/docker-entrypoint-init.d'
+    shouldExist: true

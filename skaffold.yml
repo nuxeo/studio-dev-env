@@ -12,8 +12,8 @@ build:
     - image: akervern/code-server-base
       context: code-server-base
       docker: {}
-    - image: akervern/project-code-server
-      context: project-code-server
+    - image: akervern/code-server-project
+      context: code-server-project
       docker: {}
     - image: akervern/theia-builder
       context: theia-builder
@@ -21,29 +21,34 @@ build:
     - image: akervern/theia-base
       context: theia-base
       docker: {}
-    - image: akervern/project-theia
-      context: project-theia
+    - image: akervern/theia-project
+      context: theia-project
       docker: {}
 test:
   - image: akervern:dev-base
     structureTests:
       - ./tests/base-java.yml
       - ./tests/base-nodejs.yml
+  - image: akervern:project-base
+    structureTests:
+      - ./tests/base-entrypoints.yml
   - image: akervern/code-server-base
     structureTests:
       - ./tests/code-server.yml
   - image: akervern/theia-base
     structureTests:
       - ./tests/theia.yml
-  - image: akervern/project-code-server
+  - image: akervern/code-server-project
     structureTests:
       - ./tests/base-java.yml
+      - ./tests/base-entrypoints.yml
       - ./tests/base-nodejs.yml
       - ./tests/code-server.yml
       - ./tests/code-server-project.yml
-  - image: akervern/project-theia
+  - image: akervern/theia-project
     structureTests:
       - ./tests/base-java.yml
+      - ./tests/base-entrypoints.yml
       - ./tests/base-nodejs.yml
       - ./tests/theia.yml
       - ./tests/theia-project.yml
