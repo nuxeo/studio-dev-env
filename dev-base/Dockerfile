@@ -15,8 +15,8 @@ RUN dnf install -y sudo curl wget man nano git procps openssh vim \
 # Install JDK
 COPY --from=java8 /usr/local/openjdk-8 /usr/local/openjdk-8
 COPY --from=java11 /usr/local/openjdk-11 /usr/local/openjdk-11
-ENV JAVA_HOME=/usr/local/openjdk-${JDK_VERSION} \
-  PATH=${JAVA_HOME}/jre/bin:${JAVA_HOME}/bin/:${PATH}
+ENV JAVA_HOME=/usr/local/openjdk-${JDK_VERSION}
+ENV PATH=${JAVA_HOME}/jre/bin:${JAVA_HOME}/bin/:${PATH}
 
 # Install Dev Dependencies
 RUN dnf module install -y nodejs:${NODE_VERSION} \

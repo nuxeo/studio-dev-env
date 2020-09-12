@@ -16,6 +16,6 @@ commandTests:
         'vscjava.vscode-java-test',
         'vscjava.vscode-maven',
       ]
-  - name: 'Coder can create files in project folder'
+  - name: 'Coder can create files in workspace folder'
     command: 'touch'
-    args: ['/home/coder/project/test-file']
+    args: ['/home/coder/workspace/test-file']

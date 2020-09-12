@@ -11,7 +11,7 @@ set -e
 
 if [ -z $@ ]; then
   # Start Code-server
-  exec dumb-init fixuid -q /usr/local/bin/code-server --host 0.0.0.0 --auth none ${PROJECT_HOME}
+  exec dumb-init fixuid -q /usr/local/bin/code-server --host 0.0.0.0 --auth none ${WORKSPACE_PATH}
 else
   exec $@
 fi

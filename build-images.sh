@@ -1,4 +1,5 @@
-#!/bin/bash -ex
+#!/usr/bin/env sh
+set -ex
 
 # Build dev base image
 docker build -t akervern/dev-base dev-base

@@ -41,6 +41,5 @@
   "editor.wordWrap": "on",
   "terminal.integrated.shell.linux": "/bin/bash",
   "git.autofetch": true,
-  "maven.terminal.useJavaHome": true,
-  "java.home": "/usr/local/openjdk-11"
+  "maven.terminal.useJavaHome": true
 }

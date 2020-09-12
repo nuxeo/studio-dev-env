@@ -1,3 +1,3 @@
 #!/bin/sh
 
-export PROJECT_HOME=${HOME}/project
+export WORKSPACE_PATH=${HOME}/workspace

@@ -1,4 +1,5 @@
-#!/bin/bash -ex
+#!/usr/bin/env sh
+set -ex
 
 # Pull latest skaffold image
 # docker pull gcr.io/k8s-skaffold/skaffold:latest

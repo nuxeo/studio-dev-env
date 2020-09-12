@@ -8,3 +8,6 @@ commandTests:
   - name: 'Theia user can write file in /home/thiea/.theia'
     command: 'touch'
     args: ['/home/theia/.theia/test-file']
+  - name: 'Theia can create files in workspace folder'
+    command: 'touch'
+    args: ['/home/theia/workspace/test-file']
