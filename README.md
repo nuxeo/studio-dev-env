@@ -1,4 +1,4 @@
-# Studio VSCode
+# Studio Dev Environment
 
 > Work in progress.
 
@@ -30,7 +30,7 @@ Theia Images:
 ## Scripts
 
 - `bootstrap-project.sh`: Prototype script that bootstraps a bare Nuxeo project wrapping required tools ([Nuxeo CLI](https://doc.nuxeo.com/nxdoc/nuxeo-cli/), Maven, Java, Node,...) within Docker run using `dev-base` image.
-- `start-(ide|shell).sh: Test scripts to start a dev environment.
+- `start-(ide|shell).sh`: Test scripts to start a dev environment.
 
 ## Build
 
@@ -46,6 +46,17 @@ Or, Docker images can be built one by one; following the regular build command:
 docker build -t akervern/dev-base dev-base
 ...
 ```
+
+## References
+
+- [Visual Code Remote - Containers](https://code.visualstudio.com/docs/remote/containers#_getting-started)
+- [Using Remote Docker Host](https://code.visualstudio.com/docs/remote/containers-advanced#_developing-inside-a-container-on-a-remote-docker-host)
+- [Visual Code Remote - SSH](https://code.visualstudio.com/docs/remote/ssh-tutorial)
+- [Dev Containers Repository](https://github.com/Microsoft/vscode-dev-containers)
+- [devcontainer.json Reference](https://code.visualstudio.com/docs/remote/devcontainerjson-reference)
+- [Theia IDE](https://theia-ide.org)
+- [Theia Extension Authoring](https://theia-ide.org/docs/authoring_extensions)
+- [Visual Code Extension Authoring](https://code.visualstudio.com/api)
 
 ## About Nuxeo
 
