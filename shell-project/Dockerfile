@@ -2,10 +2,6 @@ FROM akervern/project-base as base
 
 FROM akervern/dev-base:latest
 
-RUN adduser -c '' --shell /bin/bash nuxeo \
-  && mkdir -p /home/nuxeo/.m2/repository && chown -R nuxeo:nuxeo /home/nuxeo/.m2 \
-  && mkdir -p /home/nuxeo/workspace && chown -R nuxeo:nuxeo /home/nuxeo/workspace
-
 # NOS Image related
 ENV CONNECT_URL=https://connect.nuxeo.com/nuxeo
 ENV PROJECT=dummy
@@ -19,11 +15,12 @@ COPY --from=base --chown=nuxeo:nuxeo /docker-entrypoint-init.d /docker-entrypoin
 
 USER nuxeo
 
-VOLUME [ "/home/nuxeo/.m2/repository" ]
-WORKDIR /home/nuxeo
+# Install oh-my-zsh
+RUN sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+COPY --chown=nuxeo:nuxeo zshrc /home/nuxeo/.zshrc
 
 COPY 99-exec-cmd.sh /docker-entrypoint-init.d/
 # See: https://code.visualstudio.com/docs/remote/devcontainerjson-reference
 COPY devcontainer.json /home/nuxeo/workspace/.devcontainer.json
 ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD ["/bin/bash"]
+CMD ["/usr/bin/tmux"]

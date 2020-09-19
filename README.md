@@ -8,16 +8,16 @@ This repository contains a bench of Docker images to POC different approach arou
 
 Agnostic Images description:
 
-- `dev-base`: Contains developer tooling like NodeJS, Maven, Java, ...
+- `dev-base`: Initialize shared developer tooling, and create `nuxeo` user. It contains NodeJS, Maven, OpenJDK8, OpeJDK11, ...
 - `project-base`: Contains shared entrypoints to configure Maven Settings, global Environment variables, Git Credentials, ...
-- `shell-project`: Multi-stage image with `dev-base` and `project-base` using `nuxeo` user to start a full development environment. It adds `devcontainer.json` file to be able to user [Visual Code Remote - Containers](https://code.visualstudio.com/docs/remote/containers) plugin.
+- `shell-project`: Multi-stage image with `dev-base` and `project-base` to start a full development environment. It adds `devcontainer.json` file to be able to user [Visual Code Remote - Containers](https://code.visualstudio.com/docs/remote/containers) plugin.
 
 Code-Server Images:
 
 [Code-Server](https://github.com/cdr/code-server) is a VS Code fork allowing you to run it everywhere.
 
 - `core-server-base`: Installs and configure Code-Server
-- `core-server-project`: Multi-stage image with `code-server-base` and `project-base` using `coder` user to start a full development environment that exposes Code-Server as main IDE.
+- `core-server-project`: Multi-stage image with `code-server-base` and `project-base` to start a full development environment that exposes Code-Server as main IDE.
 
 Theia Images:
 
@@ -25,7 +25,7 @@ Theia Images:
 
 - `theia-builder`: Builds a Theia IDE.
 - `theia-base`: Installs and configure Theia
-- `theia-project`: Multi-stage image with `theia-base` and `project-base` using `theia` user to start a full development environment that exposes Theia as main IDE.
+- `theia-project`: Multi-stage image with `theia-base` and `project-base` to start a full development environment that exposes Theia as main IDE.
 
 ## Scripts
 

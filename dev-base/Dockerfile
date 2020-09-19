@@ -9,7 +9,7 @@ ARG NODE_VERSION=12
 ARG MAVEN_VERSION=3.6.3
 
 # Install Tooling
-RUN dnf install -y sudo curl wget man nano git procps openssh vim \
+RUN dnf install -y sudo curl tmux wget man nano git procps openssh vim zsh \
   && dnf clean all
 
 # Install JDK
@@ -32,3 +32,12 @@ ENV MAVEN_HOME /usr/share/maven
 
 # Install NPM Dependencies
 RUN npm install -g nuxeo-cli yarn
+
+# Create Nuxeo user
+RUN adduser -c '' --shell /usr/bin/zsh nuxeo \
+  && mkdir -p /home/nuxeo/.m2/repository && chown -R nuxeo:nuxeo /home/nuxeo/.m2 \
+  && mkdir -p /home/nuxeo/workspace && chown -R nuxeo:nuxeo /home/nuxeo/workspace \
+  && echo "nuxeo ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/nopasswd
+
+VOLUME [ "/home/nuxeo/.m2/repository" ]
+WORKDIR /home/nuxeo

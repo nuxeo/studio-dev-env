@@ -11,14 +11,10 @@ ENV TOKEN=tmp-pwd
 ENV GIT_USER_EMAIL=devnull@nuxeo.com
 ENV GIT_USER_NAME=${USERNAME}
 
-COPY --from=base --chown=theia:theia /docker-entrypoint.sh /
-COPY --from=base --chown=theia:theia /docker-entrypoint-init.d /docker-entrypoint-init.d/
+COPY --from=base --chown=nuxeo:nuxeo /docker-entrypoint.sh /
+COPY --from=base --chown=nuxeo:nuxeo /docker-entrypoint-init.d /docker-entrypoint-init.d/
 
-USER theia
-
-VOLUME [ "/home/theia/.m2/repository" ]
-WORKDIR /home/theia
-EXPOSE 8080
+USER nuxeo
 
 COPY 99-start-ide.sh /docker-entrypoint-init.d/
 ENTRYPOINT ["/docker-entrypoint.sh"]
