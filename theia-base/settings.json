@@ -1,23 +1,13 @@
 {
   "files.exclude": {
-    "*/studio/.metadata": true,
+    "**/studio/.metadata": true,
     "**/.classpath": true,
     "**/.project": true,
     "**/.settings": true,
     "**/.factorypath": true,
     ".theia": true,
+    ".git": true
   },
-  "java.configuration.runtimes": [
-    {
-      "name": "JavaSE-11",
-      "path": "/opt/openjdk/java-11",
-      "default": true
-    },
-    {
-      "name": "JavaSE-1.8",
-      "path": "/opt/ibm/java"
-    }
-  ],
   "java.test.config": [
     {
       "vmargs": [
@@ -33,10 +23,10 @@
     },
   ],
   "java.saveActions.organizeImports": true,
-  "search.useGlobalIgnoreFiles": true,
-  "files.autoSave": "onFocusChange",
-  "files.autoSaveDelay": 500,
-  "editor.defaultFormatter": "redhat.java",
   "editor.wordWrap": "on",
-  "terminal.integrated.shell.linux": "/bin/bash"
+  "files.autoGuessEncoding": true,
+  "git.decorations.enabled": true,
+  "editor.autoSave": "on",
+  "editor.formatOnSave": false,
+  "git.decorations.colors": true
 }

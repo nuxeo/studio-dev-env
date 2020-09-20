@@ -1,0 +1,11 @@
+schemaVersion: '2.0.0'
+commandTests:
+  - name: 'I AM Nuxeo!'
+    command: 'whoami'
+    expectedOutput: ['nuxeo']
+  - name: 'Nuxeo can create files in workspace folder'
+    command: 'touch'
+    args: ['/home/nuxeo/workspace/test-file']
+metadataTest:
+  entrypoint: ['/docker-entrypoint.sh']
+  workdir: '/home/nuxeo'

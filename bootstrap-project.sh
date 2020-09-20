@@ -9,6 +9,10 @@ read -p "- Studio Project: " STUDIO_PROJECT
 
 CWD=$(realpath $(pwd))
 PROJECT=$(basename ${CWD})
+RANDOM_STR=$(
+  date +%s | sha256sum | base64 | head -c 8
+  echo
+)
 DOCKER_REPOSITORY=${DOCKER_REPOSITORY:-akervern}
 DOCKER_IMAGE_NAME=${DOCKER_IMAGE_NAME:-dev-base}
 DOCKER_TAG=${DOCKER_TAG:-latest}
@@ -44,7 +48,7 @@ cat >${CWD}/start-ide.sh <<EOF
 #!/usr/bin/env sh
 set -ex
 
-exec docker run --rm -it -p 127.0.0.1:8080:8080 --mount "type=bind,source=${CWD},destination=/home/coder/workspace/${PROJECT}" --mount "type=bind,source=${HOME}/.m2/repository,destination=/home/coder/.m2/repository" -e "PROJECT=${STUDIO_PROJECT}" -e "USERNAME=${STUDIO_USERNAME}" -e "TOKEN=${STUDIO_TOKEN}"  ${DOCKER_REPOSITORY}/code-server-project:latest
+exec docker run --rm -it -p 127.0.0.1:8080:8080 --mount "type=bind,source=${CWD},destination=/home/nuxeo/workspace/${PROJECT}" --mount "type=bind,source=${HOME}/.m2/repository,destination=/home/nuxeo/.m2/repository" --mount "source=cs-user-settings-${RANDOM_STR},target=/home/nuxeo/.local/share/code-server/User" -e "PROJECT=${STUDIO_PROJECT}" -e "USERNAME=${STUDIO_USERNAME}" -e "TOKEN=${STUDIO_TOKEN}"  ${DOCKER_REPOSITORY}/code-server-project:latest
 EOF
 chmod +x ${CWD}/start-ide.sh
 

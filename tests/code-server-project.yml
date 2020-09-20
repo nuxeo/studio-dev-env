@@ -1,10 +1,8 @@
 schemaVersion: '2.0.0'
 metadataTest:
   exposedPorts: ['8080']
+  volumes: ['/home/nuxeo/.local/share/code-server/User']
 commandTests:
-  - name: 'I AM Coder!'
-    command: 'whoami'
-    expectedOutput: ['coder']
   - name: 'Code server Java extensions installed'
     command: 'code-server'
     args: ['--list-extensions']
@@ -16,6 +14,6 @@ commandTests:
         'vscjava.vscode-java-test',
         'vscjava.vscode-maven',
       ]
-  - name: 'Coder can create files in workspace folder'
+  - name: 'User can create files in settings folder'
     command: 'touch'
-    args: ['/home/coder/workspace/test-file']
+    args: ['/home/nuxeo/.local/share/code-server/User/hello']

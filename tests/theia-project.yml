@@ -1,13 +1,8 @@
 schemaVersion: '2.0.0'
 metadataTest:
   exposedPorts: ['8080']
+  volumes: ['/home/nuxeo/.theia']
 commandTests:
-  - name: 'I AM Theia!'
-    command: 'whoami'
-    expectedOutput: ['theia']
-  - name: 'Theia user can write file in /home/thiea/.theia'
+  - name: 'User can write file in Settings folder'
     command: 'touch'
-    args: ['/home/theia/.theia/test-file']
-  - name: 'Theia can create files in workspace folder'
-    command: 'touch'
-    args: ['/home/theia/workspace/test-file']
+    args: ['/home/nuxeo/.theia/test-file']

@@ -53,6 +53,7 @@ test:
       - ./tests/base-java.yml
       - ./tests/base-entrypoints.yml
       - ./tests/base-nodejs.yml
+      - ./tests/base-project.yml
       - ./tests/code-server.yml
       - ./tests/code-server-project.yml
   - image: akervern/theia-project
@@ -60,6 +61,7 @@ test:
       - ./tests/base-java.yml
       - ./tests/base-entrypoints.yml
       - ./tests/base-nodejs.yml
+      - ./tests/base-project.yml
       - ./tests/theia.yml
       - ./tests/theia-project.yml
 
