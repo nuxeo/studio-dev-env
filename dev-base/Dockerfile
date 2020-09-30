@@ -9,7 +9,7 @@ ARG NODE_VERSION=12
 ARG MAVEN_VERSION=3.6.3
 
 # Install Tooling
-RUN dnf install -y sudo curl tmux wget man nano git procps openssh vim zsh \
+RUN dnf install -y sudo curl tmux wget man nano git procps openssh vim zsh libxslt \
   && dnf clean all
 
 # Install JDK

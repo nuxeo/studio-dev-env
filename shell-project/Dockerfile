@@ -1,14 +1,6 @@
-FROM akervern/project-base as base
+FROM docker.packages.nuxeo.com/nos-dev/project-base as base
 
-FROM akervern/dev-base:latest
-
-# NOS Image related
-ENV CONNECT_URL=https://connect.nuxeo.com/nuxeo
-ENV PROJECT=dummy
-ENV USERNAME=studio-user
-ENV TOKEN=tmp-pwd
-ENV GIT_USER_EMAIL=devnull@nuxeo.com
-ENV GIT_USER_NAME=${USERNAME}
+FROM docker.packages.nuxeo.com/nos-dev/dev-base:latest
 
 COPY --from=base --chown=nuxeo:nuxeo /docker-entrypoint.sh /
 COPY --from=base --chown=nuxeo:nuxeo /docker-entrypoint-init.d /docker-entrypoint-init.d/

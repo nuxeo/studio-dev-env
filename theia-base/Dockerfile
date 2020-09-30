@@ -1,6 +1,6 @@
-FROM akervern/theia-builder:latest AS theia
+FROM docker.packages.nuxeo.com/nos-dev/theia-builder:latest AS theia
 
-FROM akervern/dev-base:latest
+FROM docker.packages.nuxeo.com/nos-dev/dev-base:latest
 
 COPY --chown=nuxeo:nuxeo --from=theia /usr/local/theia /home/nuxeo
 

@@ -42,6 +42,32 @@ A few helper scripts are available in that repository:
 - `bootstrap-project.sh`: Prototype script that bootstraps a bare Nuxeo project wrapping required tools ([Nuxeo CLI](https://doc.nuxeo.com/nxdoc/nuxeo-cli/), Maven, Java, Node,...) within Docker run using `dev-base` image.
 - `start-(ide|shell).sh`: Quickly start a dev environment based previously built images.
 
+## Dotenv File Usage
+
+Configuration and secrets are passed to the environment using a dotenv (`.env.nuxeo-cli` file) file.
+
+It must contain the following variables:
+
+```shell
+# NOS - Studio access and package download:
+# - Documentation: https://doc.nuxeo.com/studio/token-management
+# - NOS: https://connect.nuxeo.com
+NOS_USERNAME=nos_username
+NOS_TOKEN=nos_token
+NOS_PROJECT=nos_project
+# Nexus - Maven / NPM:
+# - Documentation: https://help.sonatype.com/iqserver/automating/rest-apis/user-token-rest-api---v2#UserTokenRESTAPI-v2-CreatingaUserToken
+# - Nexus: https://packages.nuxeo.com
+NEXUS_USER_CODE=user_code
+NEXUS_PASS_CODE=pass_code
+# Optional(s):
+# NOS_URL=https://connect.nuxeo.com/nuxeo
+# GIT_USER_EMAIL=devnull@nuxeo.com
+# GIT_USER_NAME=username
+```
+
+The [environment loading script](./project-base/docker-entrypoin-init.d/00-envs.sh) is looking for the `.env.nuxeo-cli` file in `{HOME}/workspace` and any subfolders. For instance, it can exist within the project folder as well. Loaded in the `find` cmd return order; which is deepest file first. Last loaded file is `{HOME}/workspace/.env.nuxeo-cli` if exists.
+
 ## Build
 
 With [Skaffold](https://skaffold.dev/) to build and test images:
@@ -53,7 +79,7 @@ With [Skaffold](https://skaffold.dev/) to build and test images:
 Or, Docker images can be built one by one; following the regular build command:
 
 ```bash
-docker build -t akervern/dev-base dev-base
+docker build -t docker.packages.nuxeo.com/nos-dev/dev-base dev-base
 ...
 ```
 

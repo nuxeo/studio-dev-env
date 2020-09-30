@@ -1,4 +1,4 @@
-FROM akervern/dev-base:latest
+FROM docker.packages.nuxeo.com/nos-dev/dev-base:latest
 
 RUN dnf install -y make python38 gcc-c++ \
   && dnf clean all

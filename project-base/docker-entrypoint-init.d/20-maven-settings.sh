@@ -6,11 +6,17 @@ cat >${HOME}/.m2/settings.xml <<EOF
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
                            http://maven.apache.org/xsd/settings-1.0.0.xsd">
   <servers>
+    <!-- Nuxeo Connect Server -->
     <server>
-      <!-- Nuxeo Connect Credentials -->
       <id>nuxeo-studio</id>
-      <username>${USERNAME}</username>
-      <password>${TOKEN}</password>
+      <username>${NOS_USERNAME}</username>
+      <password>${NOS_TOKEN}</password>
+    </server>
+    <!-- Nuxeo Internal Server -->
+    <server>
+      <id>maven-internal</id>
+      <username>${NEXUS_USER_CODE}</username>
+      <password>${NEXUS_PASS_CODE}</password>
     </server>
   </servers>
 </settings>

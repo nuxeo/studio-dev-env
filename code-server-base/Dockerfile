@@ -13,7 +13,7 @@ RUN code-server --install-extension vscjava.vscode-java-pack \
 #   && code-server --install-extension dotjoshjohnson.xml
 
 # Mutli-taged with dev image
-FROM akervern/dev-base:latest
+FROM docker.packages.nuxeo.com/nos-dev/dev-base:latest
 
 # Install fixuid
 RUN curl -SsL https://github.com/boxboat/fixuid/releases/download/v0.4/fixuid-0.4-linux-amd64.tar.gz | tar -C /usr/local/bin -xzf - && \
