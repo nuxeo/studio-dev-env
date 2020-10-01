@@ -40,7 +40,7 @@ This repository contains a bench of Docker images to POC different approach arou
 A few helper scripts are available in that repository:
 
 - `bootstrap-project.sh`: Prototype script that bootstraps a bare Nuxeo project wrapping required tools ([Nuxeo CLI](https://doc.nuxeo.com/nxdoc/nuxeo-cli/), Maven, Java, Node,...) within Docker run using `dev-base` image.
-- `start-(ide|shell).sh`: Quickly start a dev environment based previously built images.
+- `start-(ide|shell).sh`: Quickly start a dev environment based previously built images. You **must** create a local `.env.nuxeo-cli` file that will be mounted within the container.
 
 ## Dotenv File Usage
 
