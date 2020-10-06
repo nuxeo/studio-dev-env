@@ -1,6 +1,6 @@
-FROM openjdk:11 AS java11
+FROM azul/zulu-openjdk-centos:11 AS java11
 
-FROM openjdk:8 AS java8
+FROM azul/zulu-openjdk-centos:8 AS java8
 
 FROM centos:8
 
@@ -13,8 +13,8 @@ RUN dnf install -y sudo curl tmux wget man nano git procps openssh vim zsh libxs
   && dnf clean all
 
 # Install JDK
-COPY --from=java8 /usr/local/openjdk-8 /usr/local/openjdk-8
-COPY --from=java11 /usr/local/openjdk-11 /usr/local/openjdk-11
+COPY --from=java8 /usr/lib/jvm/zulu8 /usr/local/openjdk-8
+COPY --from=java11 /usr/lib/jvm/zulu11 /usr/local/openjdk-11
 ENV JAVA_HOME=/usr/local/openjdk-${JDK_VERSION}
 ENV PATH=${JAVA_HOME}/jre/bin:${JAVA_HOME}/bin/:${PATH}
 

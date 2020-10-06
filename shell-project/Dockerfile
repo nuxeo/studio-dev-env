@@ -12,7 +12,6 @@ RUN sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/inst
 COPY --chown=nuxeo:nuxeo zshrc /home/nuxeo/.zshrc
 
 COPY 99-exec-cmd.sh /docker-entrypoint-init.d/
-# See: https://code.visualstudio.com/docs/remote/devcontainerjson-reference
-COPY devcontainer.json /home/nuxeo/workspace/.devcontainer.json
+COPY --chown=nuxeo:nuxeo settings.json /home/nuxeo/workspace/.vscode/settings.json
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["/usr/bin/tmux"]
