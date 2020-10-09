@@ -32,6 +32,8 @@ test:
     structureTests:
       - ./tests/base-java.yml
       - ./tests/base-nodejs.yml
+      - ./tests/base-cloud.yml
+      - ./tests/base-nuxeo-tools.yml
   - image: docker.packages.nuxeo.com/nos-dev:project-base
     structureTests:
       - ./tests/base-entrypoints.yml
@@ -40,6 +42,8 @@ test:
       - ./tests/base-java.yml
       - ./tests/base-entrypoints.yml
       - ./tests/base-nodejs.yml
+      - ./tests/base-cloud.yml
+      - ./tests/base-nuxeo-tools.yml
       - ./tests/base-entrypoints.yml
       - ./tests/shell-project.yml
   - image: docker.packages.nuxeo.com/nos-dev/code-server-base
@@ -53,6 +57,8 @@ test:
       - ./tests/base-java.yml
       - ./tests/base-entrypoints.yml
       - ./tests/base-nodejs.yml
+      - ./tests/base-cloud.yml
+      - ./tests/base-nuxeo-tools.yml
       - ./tests/base-project.yml
       - ./tests/code-server.yml
       - ./tests/code-server-project.yml
@@ -61,6 +67,8 @@ test:
       - ./tests/base-java.yml
       - ./tests/base-entrypoints.yml
       - ./tests/base-nodejs.yml
+      - ./tests/base-cloud.yml
+      - ./tests/base-nuxeo-tools.yml
       - ./tests/base-project.yml
       - ./tests/theia.yml
       - ./tests/theia-project.yml

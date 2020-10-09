@@ -8,7 +8,12 @@ This repository contains a bench of Docker images to POC different approach arou
 
 **Agnostic Images description:**
 
-- `dev-base`: Initialize shared developer tooling, and create `nuxeo` user. It contains NodeJS, Maven, OpenJDK8, OpeJDK11, ...
+- `dev-base`: Initialize shared developer tooling, and create `nuxeo` user. It contains:
+
+  - Development tooling: NodeJS, Maven, OpenJDK8, OpenJDK11.
+  - Cloud Provider CLI: GCloud SDK, Azure CLI and AWS CLI.
+  - Nuxeo Stack Related Tooling: Nuxeo CLI, Kafka CLI and Mongo Shell.
+
 - `project-base`: Contains shared entrypoints to configure Maven Settings, global Environment variables, Git Credentials, ...
 - `shell-project`: Multi-stage image with `dev-base` and `project-base` to start a full development environment. It adds `devcontainer.json` file to be able to user [Visual Code Remote - Containers](https://code.visualstudio.com/docs/remote/containers) plugin.
 
@@ -41,6 +46,22 @@ A few helper scripts are available in that repository:
 
 - `bootstrap-project.sh`: Prototype script that bootstraps a bare Nuxeo project wrapping required tools ([Nuxeo CLI](https://doc.nuxeo.com/nxdoc/nuxeo-cli/), Maven, Java, Node,...) within Docker run using `dev-base` image.
 - `start-(ide|shell).sh`: Quickly start a dev environment based previously built images. You **must** create a local `.env.nuxeo-cli` file that will be mounted within the container.
+
+## Configure Cloud Provider
+
+TODO: Describe how to inject, or persist, provider's credentials and execution context between container's run.
+
+### GCloud SDK
+
+XXX `~/.config/gcloud`?
+
+### Azure CLI
+
+XXX
+
+### AWS CLI
+
+XXX
 
 ## Dotenv File Usage
 

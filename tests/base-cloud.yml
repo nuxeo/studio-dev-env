@@ -1,0 +1,14 @@
+schemaVersion: '2.0.0'
+commandTests:
+  - name: 'Azure CLI'
+    command: 'az'
+    args: ['--version']
+    expectedOutput: ['azure-cli                         2.*']
+  - name: 'AWS'
+    command: 'aws'
+    args: ['--version']
+    expectedOutput: ['aws-cli/2.*']
+  - name: 'GCloud SDK'
+    command: 'gcloud'
+    args: ['--version']
+    expectedOutput: ['Google Cloud SDK *']

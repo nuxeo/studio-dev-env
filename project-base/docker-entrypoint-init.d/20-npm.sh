@@ -2,7 +2,7 @@
 
 add_registry() {
   expect <<EOF
-spawn npm adduser --registry ${1}
+spawn npm adduser --scope=${2} --registry ${1}
 expect {
   "Username:" {send -- "${NEXUS_USER_CODE}\r"; exp_continue}
   "Password:" {send -- "${NEXUS_PASS_CODE}\r"; exp_continue}
@@ -12,5 +12,5 @@ expect {
 EOF
 }
 
-add_registry "https://packages.nuxeo.com/repository/npm-internal/"
-add_registry "https://packages.nuxeo.com/repository/npm-all/"
+add_registry "https://packages.nuxeo.com/repository/npm-internal/" "@nuxeo-internal"
+add_registry "https://packages.nuxeo.com/repository/npm-all/" "@nuxeo"

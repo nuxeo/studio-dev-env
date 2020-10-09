@@ -1,0 +1,10 @@
+schemaVersion: '2.0.0'
+commandTests:
+  - name: 'Mongo Shell'
+    command: 'mongo'
+    args: ['--version']
+    expectedOutput: ['MongoDB shell version v*']
+  - name: 'Kafka CLI'
+    command: 'kafka-topics.sh'
+    args: ['--version']
+    expectedOutput: ['2.3.*']
