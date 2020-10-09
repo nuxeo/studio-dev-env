@@ -6,8 +6,19 @@
 # Icon must end with two \r
 Icon
 
+# building
+.mvn
+.tmp
+
+# generated files
+skaffold.yaml
+
 # Thumbnails
 ._*
+
+# temp files
+*~bak
+*~
 
 # Files that might appear in the root of a volume
 .DocumentRevisions-V100
