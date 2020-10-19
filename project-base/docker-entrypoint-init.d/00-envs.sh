@@ -40,7 +40,7 @@ done
 set +a
 
 # Ensure required variables are set
-REQUIRED_ENV_VARIABLES=(NOS_USERNAME NOS_TOKEN NOS_PROJECT NEXUS_USER_CODE NEXUS_PASS_CODE)
+REQUIRED_ENV_VARIABLES=(NOS_USERNAME NOS_TOKEN NEXUS_USER_CODE NEXUS_PASS_CODE)
 for ENV_VARIABLE in "${REQUIRED_ENV_VARIABLES[@]}"; do
   if ! $(env | grep ${ENV_VARIABLE} &>/dev/null); then
     echo "Error: Missing value for ${ENV_VARIABLE}."

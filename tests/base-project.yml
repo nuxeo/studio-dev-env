@@ -3,6 +3,10 @@ commandTests:
   - name: 'I AM Nuxeo!'
     command: 'whoami'
     expectedOutput: ['nuxeo']
+  - name: 'Nuxeo is uid 900'
+    command: 'id'
+    args: ['-u', 'nuxeo']
+    expectedOutput: ['900']
   - name: 'Nuxeo can create files in workspace folder'
     command: 'touch'
     args: ['/home/nuxeo/workspace/test-file']
