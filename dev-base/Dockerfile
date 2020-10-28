@@ -131,11 +131,13 @@ RUN dnf module install -y nodejs:${NODE_VERSION} \
   && npm install -g nuxeo-cli yarn
 
 # Create Nuxeo user
-RUN adduser -u 900 -G docker -c '' --shell /usr/bin/zsh nuxeo \
-  && mkdir -p /home/nuxeo/.m2/repository && chown -R nuxeo:nuxeo /home/nuxeo/.m2 \
-  && mkdir -p /home/nuxeo/workspace && chown -R nuxeo:nuxeo /home/nuxeo/workspace \
-  && mkdir -p /home/nuxeo/.vscode-server/extensions && chown -R nuxeo:nuxeo /home/nuxeo/.vscode-server \
-  && mkdir -p /home/nuxeo/.vscode-server-insiders/extensions && chown -R nuxeo:nuxeo /home/nuxeo/.vscode-server-insiders \
+RUN umask 002 \
+  && adduser -u 900 -G docker -c '' --shell /usr/bin/zsh nuxeo \
+  && chmod g+s /home/nuxeo/ \
+  && mkdir -p /home/nuxeo/.m2/repository \
+  && mkdir -p /home/nuxeo/workspace \
+  && mkdir -p /home/nuxeo/.vscode-server/extensions \
+  && mkdir -p /home/nuxeo/.vscode-server-insiders/extensions \
   && echo "nuxeo ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/nopasswd
 
 VOLUME [ "/home/nuxeo/.m2/repository" ]
