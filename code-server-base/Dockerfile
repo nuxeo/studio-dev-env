@@ -1,5 +1,5 @@
 # Code Server - Official image
-FROM codercom/code-server:3.5.0 AS codeserver
+FROM codercom/code-server:3.6.1 AS codeserver
 
 # Ideally, we should install Java pack but server-code cannot find it yet.
 RUN code-server --install-extension vscjava.vscode-java-pack \

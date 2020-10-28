@@ -12,3 +12,11 @@ commandTests:
     command: 'gcloud'
     args: ['--version']
     expectedOutput: ['Google Cloud SDK *']
+  - name: 'Current user is in Docker group'
+    command: 'groups'
+    expectedOutput: ['docker']
+  - name: 'Docker CLI'
+    command: 'docker'
+    args: ['help']
+    expectedOutput:
+      ["Run 'docker COMMAND --help' for more information on a command."]

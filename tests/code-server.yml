@@ -3,4 +3,4 @@ commandTests:
   - name: 'code-server installed'
     command: 'code-server'
     args: ['--version']
-    expectedOutput: ['3.5.0']
+    expectedOutput: ['3.*']

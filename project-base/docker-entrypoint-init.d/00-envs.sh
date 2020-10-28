@@ -22,6 +22,7 @@ showHelp() {
   echo "NEXUS_PASS_CODE=pass_code"
   echo "# Optional(s):"
   echo "# NOS_URL=https://connect.nuxeo.com/nuxeo"
+  echo "# NUXEO_CLID=YYYY--XXXX--"
   echo "# GIT_USER_EMAIL=devnull@nuxeo.com"
   echo "# GIT_USER_NAME=username"
   echo ""

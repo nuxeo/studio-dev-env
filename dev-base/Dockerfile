@@ -93,7 +93,9 @@ ARG KAFKA_VERSION
 ARG MONGO_VERSION
 
 # Install Tooling
-RUN dnf install -y sudo curl tmux wget man nano git procps openssh vim zsh libxslt expect python${PYTHON_VERSION} \
+RUN dnf install -y dnf-utils \
+  && dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo \
+  && dnf install -y sudo docker-ce-cli curl tmux wget man nano git procps openssh vim zsh libxslt expect python${PYTHON_VERSION} \
   && dnf clean all
 
 # Install JDK
@@ -123,13 +125,13 @@ RUN rpm --import https://packages.microsoft.com/keys/microsoft.asc \
   && dnf install -y azure-cli-${AZURE_VERSION} \
   && rm -rf /etc/yum.repos.d/azure-cli.repo
 
-# Install Node, Azure, NPM
+# Install Node, Nuxeo-CLI, NPM
 RUN dnf module install -y nodejs:${NODE_VERSION} \
   && dnf clean all \
   && npm install -g nuxeo-cli yarn
 
 # Create Nuxeo user
-RUN adduser -u 900 -c '' --shell /usr/bin/zsh nuxeo \
+RUN adduser -u 900 -G docker -c '' --shell /usr/bin/zsh nuxeo \
   && mkdir -p /home/nuxeo/.m2/repository && chown -R nuxeo:nuxeo /home/nuxeo/.m2 \
   && mkdir -p /home/nuxeo/workspace && chown -R nuxeo:nuxeo /home/nuxeo/workspace \
   && mkdir -p /home/nuxeo/.vscode-server/extensions && chown -R nuxeo:nuxeo /home/nuxeo/.vscode-server \
