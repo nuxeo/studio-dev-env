@@ -1,16 +1,10 @@
 #!/bin/sh -e
 
-add_registry() {
-  expect <<EOF
-spawn npm adduser --scope=${2} --registry ${1}
-expect {
-  "Username:" {send -- "${NEXUS_USER_CODE}\r"; exp_continue}
-  "Password:" {send -- "${NEXUS_PASS_CODE}\r"; exp_continue}
-  "Email: (this IS public)" {send -- "${GIT_USER_EMAIL}\r"; exp_continue}
-  "Logged in as ${NEXUS_USER_CODE} on ${1}.
-}
-EOF
-}
+B64_AUTH=$(echo -n "${NEXUS_USER_CODE}:${NEXUS_PASS_CODE}" | base64)
 
-add_registry "https://packages.nuxeo.com/repository/npm-internal/" "@nuxeo-internal"
-add_registry "https://packages.nuxeo.com/repository/npm-all/" "@nuxeo"
+cat >${HOME}/.npmrc <<EOF
+@nuxeo-internal:registry=https://packages.nuxeo.com/repository/npm-internal/
+//packages.nuxeo.com/repository/npm-internal/:_auth=${B64_AUTH}:always-auth=true:email=${GIT_USER_EMAIL}
+@nuxeo:registry=https://packages.nuxeo.com/repository/npm-all/
+//packages.nuxeo.com/repository/npm-all/:_auth=${B64_AUTH}:always-auth=true:email=${GIT_USER_EMAIL}
+EOF

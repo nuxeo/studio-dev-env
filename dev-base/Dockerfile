@@ -7,6 +7,7 @@ ARG NODE_VERSION=12
 ARG JDK_VERSION=11
 ARG MAVEN_VERSION=3.6.3
 
+ARG KUBECTL_VERSION=1.19.0
 ARG AWS_VERSION=2.0.30
 ARG AZURE_VERSION=2.12.1-1.el7
 ARG GCLOUD_SDK_VERSION=312.0.0
@@ -77,6 +78,17 @@ RUN curl -fsSL -o /tmp/apache-maven.tar.gz https://apache.osuosl.org/maven/maven
   && rm -f /tmp/apache-maven.tar.gz
 
 #
+# Kubectl
+#
+
+FROM ALPINE_CURL AS KUBECTL
+ARG KUBECTL_VERSION
+RUN curl -o /tmp/kubectl -L https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/darwin/amd64/kubectl \
+  && mkdir -p /export/kubectl \
+  && chmod a+rx /tmp/kubectl \
+  && mv /tmp/kubectl /export/kubectl
+
+#
 # Final Image
 #
 FROM centos:${CENTOS_VERSION}
@@ -87,10 +99,25 @@ ARG GCLOUD_SDK_VERSION
 
 ARG JDK_VERSION
 ARG MAVEN_VERSION
+ARG KUBECTL_VERSION
 ARG PYTHON_VERSION
 ARG NODE_VERSION
 ARG KAFKA_VERSION
 ARG MONGO_VERSION
+
+# Create corresponding Env variable to easily review associated version
+ENV CENTOS_VERSION=${CENTOS_VERSION}
+ENV AWS_VERSION=${AWS_VERSION}
+ENV AZURE_VERSION=${AZURE_VERSION}
+ENV GCLOUD_SDK_VERSION=${GCLOUD_SDK_VERSION}
+
+ENV JDK_VERSION=${JDK_VERSION}
+ENV MAVEN_VERSION=${MAVEN_VERSION}
+ENV KUBECTL_VERSION=${KUBECTL_VERSION}
+ENV PYTHON_VERSION=${PYTHON_VERSION}
+ENV NODE_VERSION=${NODE_VERSION}
+ENV KAFKA_VERSION=${KAFKA_VERSION}
+ENV MONGO_VERSION=${MONGO_VERSION}
 
 # Install Tooling
 RUN dnf install -y dnf-utils \
@@ -110,13 +137,15 @@ COPY --from=MONGO_SHELL /export/mongodb-linux-x86_64-ubuntu1804-${MONGO_VERSION}
 COPY --from=AWS_CLI /export/aws /usr/local/tools/awscli
 COPY --from=GCLOUD_SDK /export/google-cloud-sdk /usr/local/tools/gcloud-sdk
 COPY --from=MAVEN /export/maven /usr/local/tools/maven
+COPY --from=KUBECTL /export/kubectl /usr/local/tools/kubectl
 
 # Setup PATH
 ENV PATH /usr/local/tools/kafka_cli/bin:/usr/local/tools/mongodb_shell/bin:${PATH}
 RUN ln -s /usr/local/tools/maven/bin/mvn /usr/local/bin/ \
   && ln -s /usr/local/tools/awscli/v2/${AWS_VERSION}/bin/aws /usr/local/bin/ \
   && ln -s /usr/local/tools/gcloud-sdk/bin/gcloud /usr/local/bin/ \
-  && ln -s /usr/local/tools/azure/az /usr/local/bin/
+  && ln -s /usr/local/tools/azure/az /usr/local/bin/ \
+  && ln -s /usr/local/tools/kubectl/kubectl /usr/local/bin/
 ENV MAVEN_HOME /usr/local/tools/maven
 
 # Azure-CLI

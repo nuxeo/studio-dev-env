@@ -27,6 +27,9 @@ build:
     - image: docker.packages.nuxeo.com/nos-dev/theia-project
       context: theia-project
       docker: {}
+    - image: docker.packages.nuxeo.com/nos-dev/bootstrap
+      context: bootstrap
+      docker: {}
 test:
   - image: docker.packages.nuxeo.com/nos-dev:dev-base
     structureTests:
