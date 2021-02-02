@@ -14,6 +14,14 @@ if [[ -e /var/run/docker.sock ]]; then
   },
   "HttpHeaders": {
     "User-Agent": "Docker-Client/19.03.13 (linux)"
+  },
+  "credHelpers" : {
+    "marketplace.gcr.io" : "gcloud",
+    "asia.gcr.io" : "gcloud",
+    "us.gcr.io" : "gcloud",
+    "eu.gcr.io" : "gcloud",
+    "gcr.io" : "gcloud",
+    "staging-k8s.gcr.io" : "gcloud"
   }
 }
 EOF
