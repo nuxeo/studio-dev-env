@@ -20,3 +20,7 @@ commandTests:
     args: ['help']
     expectedOutput:
       ["Run 'docker COMMAND --help' for more information on a command."]
+  - name: 'Docker Compose'
+    command: 'docker-compose'
+    args: ['help']
+    expectedOutput: ['Define and run multi-container applications with Docker.']

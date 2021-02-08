@@ -8,6 +8,7 @@ ARG JDK_VERSION=11
 ARG MAVEN_VERSION=3.6.3
 
 ARG KUBECTL_VERSION=1.19.0
+ARG DOCKER_COMPOSE_VERSION=1.28.2
 ARG AWS_VERSION=2.0.30
 ARG AZURE_VERSION=2.12.1-1.el7
 ARG GCLOUD_SDK_VERSION=312.0.0
@@ -100,6 +101,7 @@ ARG GCLOUD_SDK_VERSION
 ARG JDK_VERSION
 ARG MAVEN_VERSION
 ARG KUBECTL_VERSION
+ARG DOCKER_COMPOSE_VERSION
 ARG PYTHON_VERSION
 ARG NODE_VERSION
 ARG KAFKA_VERSION
@@ -114,6 +116,7 @@ ENV GCLOUD_SDK_VERSION=${GCLOUD_SDK_VERSION}
 ENV JDK_VERSION=${JDK_VERSION}
 ENV MAVEN_VERSION=${MAVEN_VERSION}
 ENV KUBECTL_VERSION=${KUBECTL_VERSION}
+ENV DOCKER_COMPOSE_VERSION=${DOCKER_COMPOSE_VERSION}
 ENV PYTHON_VERSION=${PYTHON_VERSION}
 ENV NODE_VERSION=${NODE_VERSION}
 ENV KAFKA_VERSION=${KAFKA_VERSION}
@@ -138,6 +141,10 @@ COPY --from=AWS_CLI /export/aws /usr/local/tools/awscli
 COPY --from=GCLOUD_SDK /export/google-cloud-sdk /usr/local/tools/gcloud-sdk
 COPY --from=MAVEN /export/maven /usr/local/tools/maven
 COPY --from=KUBECTL /export/kubectl /usr/local/tools/kubectl
+
+# Docker-Compose
+RUN curl -L "https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose \
+  && chmod a+x /usr/local/bin/docker-compose
 
 # Setup PATH
 ENV PATH /usr/local/tools/kafka_cli/bin:/usr/local/tools/mongodb_shell/bin:${PATH}

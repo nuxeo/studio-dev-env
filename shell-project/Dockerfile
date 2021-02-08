@@ -13,5 +13,7 @@ COPY --chown=nuxeo:nuxeo zshrc /home/nuxeo/.zshrc
 
 COPY 99-exec-cmd.sh /docker-entrypoint-init.d/
 COPY --chown=nuxeo:nuxeo settings.json /home/nuxeo/workspace/.vscode/settings.json
+
+WORKDIR "/home/nuxeo/workspace"
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["/usr/bin/tmux"]

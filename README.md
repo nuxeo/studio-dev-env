@@ -10,9 +10,8 @@ This repository contains a bench of Docker images to POC different approach arou
 
 - `dev-base`: Initialize shared developer tooling, and create `nuxeo` user. It contains:
 
-  - Development tooling: NodeJS, Maven, OpenJDK8, OpenJDK11.
-  - Cloud Provider CLI: GCloud SDK, Azure CLI and AWS CLI.
-  - Nuxeo Stack Related Tooling: Nuxeo CLI, Kafka CLI and Mongo Shell.
+  - Development tooling: NodeJS, NPM, Maven, Docker CLI, Docker Compose, Zulu OpenJDK8, Zulu OpenJDK11 and Nuxeo CLI
+  - Third parties CLIs: Kafka CLI and Mongo Shell, GCloud SDK, Azure CLI and AWS CLI.
 
 - `project-base`: Contains shared entrypoints to configure Maven Settings, global Environment variables, Git Credentials, ...
 - `shell-project`: Multi-stage image with `dev-base` and `project-base` to start a full development environment. It adds `devcontainer.json` file to be able to user [Visual Code Remote - Containers](https://code.visualstudio.com/docs/remote/containers) plugin.
