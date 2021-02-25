@@ -76,6 +76,10 @@ cat >start-shell.sh <<EOF
 #!/usr/bin/env sh
 set -e
 
+realpath() {
+  [[ \$1 = /* ]] && echo "\$1" || echo "\$PWD/\${1#./}"
+}
+
 CWD=\$(realpath \$(dirname \$0))
 
 exec docker run --rm -it    \
@@ -90,6 +94,10 @@ chmod +x start-shell.sh
 cat >start-ide.sh <<EOF
 #!/usr/bin/env sh
 set -e
+
+realpath() {
+  [[ \$1 = /* ]] && echo "\$1" || echo "\$PWD/\${1#./}"
+}
 
 B64_PROJECT=$(echo -n ${STUDIO_PROJECT} | base64)
 CWD=\$(realpath \$(dirname \$0))
