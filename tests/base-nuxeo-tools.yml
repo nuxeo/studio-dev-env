@@ -7,4 +7,4 @@ commandTests:
   - name: 'Kafka CLI'
     command: 'kafka-topics.sh'
     args: ['--version']
-    expectedOutput: ['2.3.*']
+    expectedOutput: ['2.*']
