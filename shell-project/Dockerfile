@@ -1,6 +1,8 @@
-FROM docker.packages.nuxeo.com/nos-dev/project-base as base
+ARG PROJECT_BASE
+FROM $PROJECT_BASE as base
 
-FROM docker.packages.nuxeo.com/nos-dev/dev-base:latest
+ARG DEV_BASE
+FROM $DEV_BASE
 
 COPY --from=base --chown=nuxeo:nuxeo /docker-entrypoint.sh /
 COPY --from=base --chown=nuxeo:nuxeo /docker-entrypoint-init.d /docker-entrypoint-init.d/

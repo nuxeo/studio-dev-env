@@ -1,7 +1,9 @@
-FROM docker.packages.nuxeo.com/nos-dev/project-base as base
+ARG PROJECT_BASE
+FROM $PROJECT_BASE as base
 
 # Final Image
-FROM docker.packages.nuxeo.com/nos-dev/code-server-base:latest
+ARG CODE_SERVER_BASE
+FROM $CODE_SERVER_BASE
 
 # Code Server additional extension
 ENV EXTENSIONS=

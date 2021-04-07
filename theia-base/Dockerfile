@@ -1,8 +1,10 @@
-FROM docker.packages.nuxeo.com/nos-dev/theia-builder:latest AS theia
+ARG THEIA_BUILDER
+FROM $THEIA_BUILDER AS builder
 
-FROM docker.packages.nuxeo.com/nos-dev/dev-base:latest
+ARG DEV_BASE
+FROM $DEV_BASE
 
-COPY --chown=nuxeo:nuxeo --from=theia /usr/local/theia /home/nuxeo
+COPY --chown=nuxeo:nuxeo --from=builder /usr/local/theia /home/nuxeo
 
 ENV SHELL=/bin/bash \
   THEIA_DEFAULT_PLUGINS=local-dir:/home/nuxeo/plugins

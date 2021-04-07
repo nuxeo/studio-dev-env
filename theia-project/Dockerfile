@@ -1,7 +1,9 @@
-FROM docker.packages.nuxeo.com/nos-dev/project-base as base
+ARG PROJECT_BASE
+FROM $PROJECT_BASE as base
 
 # Final Image
-FROM docker.packages.nuxeo.com/nos-dev/theia-base:latest
+ARG THEIA_BASE
+FROM $THEIA_BASE
 
 COPY --from=base --chown=nuxeo:nuxeo /docker-entrypoint.sh /
 COPY --from=base --chown=nuxeo:nuxeo /docker-entrypoint-init.d /docker-entrypoint-init.d/

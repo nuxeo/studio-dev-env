@@ -12,13 +12,15 @@ echo -e "\n> NOS Credentials"
 echo -e "Used to access NOS Studio project"
 echo -e "Create one following: https://connect.nuxeo.com/nuxeo/site/connect/tokens"
 read -p "- NOS Username: " STUDIO_USERNAME
-read -p "- NOS Token: " STUDIO_TOKEN
+read -s -p "- NOS Token: " STUDIO_TOKEN
+echo "" # Add extra carret return; `read -s` silent it.
 read -p "- NOS Project: " STUDIO_PROJECT
 echo -e "\n> Nexus UserToken"
 echo -e "Used to access Nexus artifacts"
 echo -e "Create one following: https://packages.nuxeo.com/#user/usertoken"
 read -p "- Nexus User Code: " NEXUS_USER
-read -p "- Nexus Pass Code: " NEXUS_TOKEN
+read -s -p "- Nexus Pass Code: " NEXUS_TOKEN
+echo "" # Add extra carret return; `read -s` silent it.
 echo -e "\n> Nuxeo Instance CLID"
 echo "Content of an instance.clid file while replace '\n' carret return with '--'."
 read -p "- Instance CLID: " NUXEO_CLID
@@ -82,10 +84,10 @@ realpath() {
 
 CWD=\$(realpath \$(dirname \$0))
 
-exec docker run --rm -it    \
+exec docker run --rm -it \
   --privileged -v "/var/run/docker.sock:/var/run/docker.sock" \
   --mount "type=bind,source=\${CWD},destination=/home/nuxeo/workspace/${PROJECT}" \
-  --mount "type=bind,source=\${HOME}/.m2/repository,destination=/home/nuxeo/.m2/repository" \
+  --mount "type=volume,source=${PROJECT}_m2repo,destination=/home/nuxeo/.m2/repository" \
   ${DOCKER_REPOSITORY}/shell-project:latest
 EOF
 chmod +x start-shell.sh
@@ -99,13 +101,14 @@ realpath() {
   [[ \$1 = /* ]] && echo "\$1" || echo "\$PWD/\${1#./}"
 }
 
-B64_PROJECT=$(echo -n ${STUDIO_PROJECT} | base64)
+B64_PROJECT=$(echo -n ${STUDIO_PROJECT} | md5)
 CWD=\$(realpath \$(dirname \$0))
 
-exec docker run --rm -it    \
+exec docker run --rm -it           \
+  -p 8080:8080
   --privileged -v "/var/run/docker.sock:/var/run/docker.sock"  \
-  --mount "type=bind,source=\${CWD},destination=/home/nuxeo/workspace/${STUDIO_PROJECT}" \
-  --mount "type=bind,source=\${HOME}/.m2/repository,destination=/home/nuxeo/.m2/repository" \
+  --mount "type=bind,source=\${CWD},destination=/home/nuxeo/workspace/${PROJECT}" \
+  --mount "type=volume,source=${PROJECT}_m2repo,destination=/home/nuxeo/.m2/repository" \
   --mount "source=cs-settings-\${B64_PROJECT},target=/home/nuxeo/.local/share/code-server/User" \
   ${DOCKER_REPOSITORY}/code-server-project:latest
 EOF

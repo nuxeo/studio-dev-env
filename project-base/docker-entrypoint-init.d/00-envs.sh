@@ -36,8 +36,22 @@ export WORKSPACE_PATH=${HOME}/workspace
 set -a
 DOTENVS=$(find ${WORKSPACE_PATH} -name ${DOTENV} 2>/dev/null)
 for FILE in ${DOTENVS}; do
-  source ${FILE}
+  . "${FILE}"
+
+  # Maxi hack...
+  cat >>${HOME}/.bashrc <<EOF
+set -a
+. "${FILE}"
+set +a
+EOF
+
+  cat >>${HOME}/.zshrc <<EOF
+set -a
+. "${FILE}"
+set +a
+EOF
 done
+
 set +a
 
 # Ensure required variables are set

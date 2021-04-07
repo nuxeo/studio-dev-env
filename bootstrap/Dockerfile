@@ -1,4 +1,5 @@
-FROM docker.packages.nuxeo.com/nos-dev/dev-base:latest
+ARG DEV_BASE
+FROM $DEV_BASE
 
 WORKDIR /home/nuxeo/workspace
 

@@ -149,10 +149,8 @@ RUN curl -L "https://github.com/docker/compose/releases/download/${DOCKER_COMPOS
   && chmod a+x /usr/local/bin/docker-compose
 
 # Setup PATH
-ENV PATH /usr/local/tools/kafka_cli/bin:/usr/local/tools/mongodb_shell/bin:${PATH}
+ENV PATH /usr/local/tools/kafka_cli/bin:/usr/local/tools/mongodb_shell/bin:/usr/local/tools/gcloud-sdk/bin:/usr/local/tools/awscli/v2/${AWS_VERSION}/bin:${PATH}
 RUN ln -s /usr/local/tools/maven/bin/mvn /usr/local/bin/ \
-  && ln -s /usr/local/tools/awscli/v2/${AWS_VERSION}/bin/aws /usr/local/bin/ \
-  && ln -s /usr/local/tools/gcloud-sdk/bin/gcloud /usr/local/bin/ \
   && ln -s /usr/local/tools/azure/az /usr/local/bin/ \
   && ln -s /usr/local/tools/kubectl/kubectl /usr/local/bin/
 ENV MAVEN_HOME /usr/local/tools/maven

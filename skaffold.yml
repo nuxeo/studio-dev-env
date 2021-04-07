@@ -1,35 +1,54 @@
-apiVersion: skaffold/v2beta2
+apiVersion: skaffold/v2beta13
 kind: Config
 
 build:
+  tagPolicy:
+    sha256: {}
   artifacts:
     - image: docker.packages.nuxeo.com/nos-dev/dev-base
       context: dev-base
-      docker: {}
     - image: docker.packages.nuxeo.com/nos-dev/project-base
       context: project-base
-      docker: {}
     - image: docker.packages.nuxeo.com/nos-dev/shell-project
       context: shell-project
-      docker: {}
+      requires:
+        - image: docker.packages.nuxeo.com/nos-dev/dev-base
+          alias: DEV_BASE
+        - image: docker.packages.nuxeo.com/nos-dev/project-base
+          alias: PROJECT_BASE
     - image: docker.packages.nuxeo.com/nos-dev/code-server-base
       context: code-server-base
-      docker: {}
+      requires:
+        - image: docker.packages.nuxeo.com/nos-dev/dev-base
+          alias: DEV_BASE
     - image: docker.packages.nuxeo.com/nos-dev/code-server-project
       context: code-server-project
-      docker: {}
+      requires:
+        - image: docker.packages.nuxeo.com/nos-dev/code-server-base
+          alias: CODE_SERVER_BASE
+        - image: docker.packages.nuxeo.com/nos-dev/project-base
+          alias: PROJECT_BASE
     - image: docker.packages.nuxeo.com/nos-dev/theia-builder
       context: theia-builder
-      docker: {}
     - image: docker.packages.nuxeo.com/nos-dev/theia-base
       context: theia-base
-      docker: {}
+      requires:
+        - image: docker.packages.nuxeo.com/nos-dev/dev-base
+          alias: DEV_BASE
+        - image: docker.packages.nuxeo.com/nos-dev/theia-builder
+          alias: THEIA_BUILDER
     - image: docker.packages.nuxeo.com/nos-dev/theia-project
       context: theia-project
-      docker: {}
+      requires:
+        - image: docker.packages.nuxeo.com/nos-dev/theia-base
+          alias: THEIA_BASE
+        - image: docker.packages.nuxeo.com/nos-dev/project-base
+          alias: PROJECT_BASE
     - image: docker.packages.nuxeo.com/nos-dev/bootstrap
       context: bootstrap
-      docker: {}
+      requires:
+        - image: docker.packages.nuxeo.com/nos-dev/dev-base
+          alias: DEV_BASE
 test:
   - image: docker.packages.nuxeo.com/nos-dev:dev-base
     structureTests:
@@ -84,6 +103,11 @@ profiles:
       - command: dev
     build:
       local: { push: false }
+  - name: release
+    build:
       tagPolicy:
-        envTemplate:
-          template: '{{.IMAGE_NAME}}:latest'
+        gitCommit: {}
+      cluster:
+        dockerConfig:
+          secretName: knative-docker-cfg
+          path: .dockerconfigjson
