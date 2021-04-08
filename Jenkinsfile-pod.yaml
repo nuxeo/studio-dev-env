@@ -24,6 +24,15 @@ spec:
       volumeMounts:
         - mountPath: /home/jenkins/agent
           name: workspace-volume
+    - command:
+        - sh
+        - -c
+        - chmod 777 /.skaffold
+      image: busybox:1.31.1
+      name: home-skaffold-perms
+      volumeMounts:
+        - mountPath: /.skaffold
+          name: skaffold-volume
   containers:
     - name: skaffold
       securityContext:
@@ -33,6 +42,7 @@ spec:
         privileged: true
       env: []
       image: gcr.io/k8s-skaffold/skaffold:v1.21.0
+      command: ['tail', '-f', '/dev/null']
       resources:
         limits:
           cpu: "6"
@@ -41,4 +51,32 @@ spec:
           cpu: "4"
           memory: 6Gi
       tty: true
-      volumeMounts: []
+      volumeMounts:
+        - mountPath: /home/jenkins/agent
+          name: workspace-volume
+        - mountPath: /.skaffold
+          name: skaffold-volume
+        - mountPath: /.skaffold/docker
+          name: docker-config-volume
+    - name: jnlp
+      image: jenkins/jnlp-slave
+      securityContext:
+        runAsUser: 1000
+        allowPrivilegeEscalation: false
+      env:
+        - name: JENKINS_TUNNEL
+          value: jenkins-operator-slave-master:50000
+      volumeMounts:
+        - mountPath: /home/jenkins/agent
+          name: workspace-volume
+  priority: 0
+  restartPolicy: Never
+  serviceAccountName: tekton-bot
+  volumes:
+    - name: workspace-volume
+      emptyDir: { }
+    - name: skaffold-volume
+      emptyDir: { }
+    - name: docker-config-volume
+      secret:
+        secretName: knative-docker-cfg
