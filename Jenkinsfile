@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  * Contributors:
- *     Gildas Lefevre <glefevre@nuxeo.com>
+ *     Florian Bématol <fbematol@nuxeo.com>
  */
 
 if (currentBuild.rawBuild.getCauses().toString().contains('BranchIndexingCause')) {
@@ -22,10 +22,6 @@ if (currentBuild.rawBuild.getCauses().toString().contains('BranchIndexingCause')
     currentBuild.result = 'ABORTED' // optional, gives a better hint to the user that it's been skipped, rather than the default which shows it's successful
     return
 }
-
-def volumeName = env.JOB_NAME.replaceAll('/','-').toLowerCase()
-
-def containerScript = ""
 
 pipeline {
     options {
@@ -60,19 +56,56 @@ pipeline {
             }
         }
         stage('Build docker images') {
-            when {
-                not {
-                    buildingTag()
+            stages {
+                stage('latest') {
+                    when {
+                        branch 'master'
+                        not {
+                            buildingTag()
+                        }
+                    }
+                    steps {
+                        gitStatusWrapper(credentialsId: 'jx-pipeline-git-github-github',
+                                         description: 'skaffold latest images',
+                                         failureDescription: 'skaffold latest images',
+                                         gitHubContext: 'skaffold-latest',
+                                         successDescription: 'skaffold latest images') {
+                            container('skaffold') {
+                                sh 'skaffold build -p latest'
+                            }
+                        }
+                    }
                 }
-            }
-            steps {
-                gitStatusWrapper(credentialsId: 'jx-pipeline-git-github-github',
-                                 description: 'skaffold images',
-                                 failureDescription: 'skaffold images',
-                                 gitHubContext: 'skaffold',
-                                 successDescription: 'skaffold images') {
-                    container('skaffold') {
-                        sh 'skaffold build -p ci'
+                stage('release') {
+                    when {
+                        buildingTag()
+                        not {
+                            branch 'master'
+                        }
+                    }
+                    steps {
+                        gitStatusWrapper(credentialsId: 'jx-pipeline-git-github-github',
+                                         description: 'skaffold latest images',
+                                         failureDescription: 'skaffold latest images',
+                                         gitHubContext: 'skaffold-latest',
+                                         successDescription: 'skaffold latest images') {
+                            container('skaffold') {
+                                sh 'skaffold build -p release'
+                            }
+                        }
+                    }
+                }
+                stage('branch') {
+                    steps {
+                        gitStatusWrapper(credentialsId: 'jx-pipeline-git-github-github',
+                                         description: 'skaffold branch images',
+                                         failureDescription: 'skaffold branch images',
+                                         gitHubContext: 'skaffold-branch',
+                                         successDescription: 'skaffold branch images') {
+                            container('skaffold') {
+                                sh 'skaffold build -p branch'
+                            }
+                        }
                     }
                 }
             }
