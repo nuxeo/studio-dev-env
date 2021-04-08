@@ -60,19 +60,56 @@ pipeline {
             }
         }
         stage('Build docker images') {
-            when {
-                not {
-                    buildingTag()
+            stages {
+                stage('latest') {
+                    when {
+                        branch 'master'
+                        not {
+                            buildingTag()
+                        }
+                    }
+                    steps {
+                        gitStatusWrapper(credentialsId: 'jx-pipeline-git-github-github',
+                                         description: 'skaffold latest images',
+                                         failureDescription: 'skaffold latest images',
+                                         gitHubContext: 'skaffold-latest',
+                                         successDescription: 'skaffold latest images') {
+                            container('skaffold') {
+                                sh 'skaffold build -p latest'
+                            }
+                        }
+                    }
                 }
-            }
-            steps {
-                gitStatusWrapper(credentialsId: 'jx-pipeline-git-github-github',
-                                 description: 'skaffold images',
-                                 failureDescription: 'skaffold images',
-                                 gitHubContext: 'skaffold',
-                                 successDescription: 'skaffold images') {
-                    container('skaffold') {
-                        sh 'skaffold build -p ci'
+                stage('release') {
+                    when {
+                        buildingTag()
+                        not {
+                            branch 'master'
+                        }
+                    }
+                    steps {
+                        gitStatusWrapper(credentialsId: 'jx-pipeline-git-github-github',
+                                         description: 'skaffold latest images',
+                                         failureDescription: 'skaffold latest images',
+                                         gitHubContext: 'skaffold-latest',
+                                         successDescription: 'skaffold latest images') {
+                            container('skaffold') {
+                                sh 'skaffold build -p release'
+                            }
+                        }
+                    }
+                }
+                stage('branch') {
+                    steps {
+                        gitStatusWrapper(credentialsId: 'jx-pipeline-git-github-github',
+                                         description: 'skaffold branch images',
+                                         failureDescription: 'skaffold branch images',
+                                         gitHubContext: 'skaffold-branch',
+                                         successDescription: 'skaffold branch images') {
+                            container('skaffold') {
+                                sh 'skaffold build -p branch'
+                            }
+                        }
                     }
                 }
             }

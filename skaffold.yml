@@ -103,19 +103,25 @@ profiles:
       - command: dev
     build:
       local: { push: false }
+  - name: jenkins
+    activation:
+      - env: "!JENKINS_HOME="
+    build:
+      cluster:
+        dockerConfig:
+          path: /.skaffold/docker/.dockerconfigjson
+        randomPullSecret: true
+        randomDockerConfigSecret: true
+  - name: branch
+    build:
+      tagPolicy:
+        envTemplate:
+          template: "{{.BRANCH_NAME}}"
   - name: release
     build:
       tagPolicy:
-        gitCommit: {}
-      cluster:
-        dockerConfig:
-          secretName: knative-docker-cfg
-          path: .dockerconfigjson
-  - name: ci
+        gitCommit: { }
+  - name: latest
     build:
       tagPolicy:
-        sha256: {}
-      cluster:
-        dockerConfig:
-          secretName: knative-docker-cfg
-          path: .dockerconfigjson
+        sha256: { }
