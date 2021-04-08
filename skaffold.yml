@@ -111,3 +111,11 @@ profiles:
         dockerConfig:
           secretName: knative-docker-cfg
           path: .dockerconfigjson
+  - name: ci
+    build:
+      tagPolicy:
+        sha256: {}
+      cluster:
+        dockerConfig:
+          secretName: knative-docker-cfg
+          path: .dockerconfigjson
