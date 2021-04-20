@@ -50,16 +50,16 @@ build:
         - image: docker.packages.nuxeo.com/nos-dev/dev-base
           alias: DEV_BASE
 test:
-  - image: docker.packages.nuxeo.com/nos-dev:dev-base
+  - image: docker.packages.nuxeo.com/nos-dev/dev-base
     structureTests:
       - ./tests/base-java.yml
       - ./tests/base-nodejs.yml
       - ./tests/base-cloud.yml
       - ./tests/base-nuxeo-tools.yml
-  - image: docker.packages.nuxeo.com/nos-dev:project-base
+  - image: docker.packages.nuxeo.com/nos-dev/project-base
     structureTests:
       - ./tests/base-entrypoints.yml
-  - image: docker.packages.nuxeo.com/nos-dev:shell-project
+  - image: docker.packages.nuxeo.com/nos-dev/shell-project
     structureTests:
       - ./tests/base-java.yml
       - ./tests/base-entrypoints.yml
@@ -105,7 +105,7 @@ profiles:
       local: { push: false }
   - name: jenkins
     activation:
-      - env: "!JENKINS_HOME="
+      - env: '!JENKINS_HOME='
     build:
       cluster:
         dockerConfig:
@@ -116,12 +116,12 @@ profiles:
     build:
       tagPolicy:
         envTemplate:
-          template: "{{.BRANCH_NAME}}"
+          template: '{{.BRANCH_NAME}}'
   - name: release
     build:
       tagPolicy:
-        gitCommit: { }
+        gitCommit: {}
   - name: latest
     build:
       tagPolicy:
-        sha256: { }
+        sha256: {}

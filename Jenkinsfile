@@ -96,6 +96,12 @@ pipeline {
                     }
                 }
                 stage('branch') {
+                    when {
+                        not {
+                            branch 'master'
+                            buildingTag()
+                        }
+                    }
                     steps {
                         gitStatusWrapper(credentialsId: 'jx-pipeline-git-github-github',
                                          description: 'skaffold branch images',
