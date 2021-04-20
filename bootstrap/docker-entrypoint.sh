@@ -86,7 +86,7 @@ CWD=\$(realpath \$(dirname \$0))
 
 exec docker run --rm -it \
   -v "/var/run/docker.sock:/var/run/docker.sock" \
-  --mount "type=bind,source=\${CWD},destination=/home/nuxeo/workspace/${PROJECT}" \
+  --mount "type=bind,source=\${CWD},destination=${WORKSPACE}/${PROJECT}" \
   --mount "type=volume,source=${PROJECT}_m2repo,destination=/home/nuxeo/.m2/repository" \
   ${DOCKER_REPOSITORY}/shell-project:latest
 EOF
@@ -107,7 +107,7 @@ CWD=\$(realpath \$(dirname \$0))
 exec docker run --rm -it           \
   -p 8080:8080
   -v "/var/run/docker.sock:/var/run/docker.sock"  \
-  --mount "type=bind,source=\${CWD},destination=/home/nuxeo/workspace/${PROJECT}" \
+  --mount "type=bind,source=\${CWD},destination=${WORKSPACE}/${PROJECT}" \
   --mount "type=volume,source=${PROJECT}_m2repo,destination=/home/nuxeo/.m2/repository" \
   --mount "source=cs-settings-\${B64_PROJECT},target=/home/nuxeo/.local/share/code-server/User" \
   ${DOCKER_REPOSITORY}/code-server-project:latest

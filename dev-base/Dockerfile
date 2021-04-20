@@ -132,7 +132,7 @@ RUN dnf install -y dnf-utils \
   && dnf clean all
 
 # Install JDK
-COPY --from=java11 /usr/lib/jvm/zulu11 /usr/local/openjdk-11
+COPY --from=java11 /usr/lib/jvm/zulu11-ca /usr/local/openjdk-11
 ENV JAVA_HOME=/usr/local/openjdk-${JDK_VERSION}
 ENV PATH=${JAVA_HOME}/jre/bin:${JAVA_HOME}/bin/:${PATH}
 
