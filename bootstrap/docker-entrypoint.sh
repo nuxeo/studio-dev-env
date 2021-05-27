@@ -105,7 +105,7 @@ realpath() {
   [[ \$1 = /* ]] && echo "\$1" || echo "\$PWD/\${1#./}"
 }
 
-B64_PROJECT=$(echo -n "${STUDIO_PROJECT}" | md5)
+B64_PROJECT=$(echo -n "${STUDIO_PROJECT}" | md5sum | awk '{print $1}')
 CWD=\$(realpath \$(dirname \$0))
 
 exec docker run --rm -it \
@@ -126,7 +126,7 @@ echo ""
 echo ""
 echo "🍻 Congrats! Your environment is ready to go."
 echo "What to do next?"
-echo "  - Open ${PROJECT} folder with VSCode then let the devcontainer magic happenning..."
+echo "  - Build the project Docker image and then open ${PROJECT} folder with VSCode then let the devcontainer magic happenning..."
 echo "  - Start Online IDE: ./${PROJECT}/start-ide.sh"
 echo "  - Start Dev Shell: ./${PROJECT}/start-shell.sh"
 echo "  - Use VS Code Remote-Container extension: ./${PROJECT}/start-shell.sh then \"Remote-Container: Attach to Running Container\" from VS Code"
