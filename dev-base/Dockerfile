@@ -12,7 +12,7 @@ ARG DOCKER_COMPOSE_VERSION=1.28.2
 ARG AWS_VERSION=2.0.30
 ARG AZURE_VERSION=2.12.1-1.el7
 ARG GCLOUD_SDK_VERSION=312.0.0
-ARG KAFKA_VERSION=2.6.1
+ARG KAFKA_VERSION=2.6.2
 ARG KAFKA_SCALA_VERSION=2.13
 ARG MONGO_VERSION=4.4.0
 
@@ -128,7 +128,7 @@ ENV MONGO_VERSION=${MONGO_VERSION}
 # Install Tooling
 RUN dnf install -y dnf-utils \
   && dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo \
-  && dnf install -y sudo docker-ce-cli curl tmux wget man nano git procps openssh vim zsh libxslt expect python${PYTHON_VERSION} \
+  && dnf install -y sudo docker-ce-cli curl tmux wget man nano git procps openssh vim zsh libxslt expect unzip python${PYTHON_VERSION} \
   && dnf clean all
 
 # Install JDK
