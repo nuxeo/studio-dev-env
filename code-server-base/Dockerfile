@@ -16,13 +16,6 @@ RUN code-server --install-extension vscjava.vscode-java-pack \
 ARG DEV_BASE
 FROM $DEV_BASE
 
-# Install fixuid
-RUN curl -SsL https://github.com/boxboat/fixuid/releases/download/v0.4/fixuid-0.4-linux-amd64.tar.gz | tar -C /usr/local/bin -xzf - && \
-  chown root:root /usr/local/bin/fixuid && \
-  chmod 4755 /usr/local/bin/fixuid && \
-  mkdir -p /etc/fixuid && \
-  printf "user: nuxeo\ngroup: nuxeo\n" > /etc/fixuid/config.yml
-
 # Install dumb-init
 RUN wget -O /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.2.2/dumb-init_1.2.2_amd64 \
   && chmod 4755 /usr/local/bin/dumb-init
