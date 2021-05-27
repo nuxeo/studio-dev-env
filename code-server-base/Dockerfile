@@ -1,3 +1,5 @@
+ARG DEV_BASE
+
 # Code Server - Official image
 FROM codercom/code-server:3.6.1 AS codeserver
 
@@ -13,7 +15,6 @@ RUN code-server --install-extension vscjava.vscode-java-pack \
 #   && code-server --install-extension dotjoshjohnson.xml
 
 # Mutli-taged with dev image
-ARG DEV_BASE
 FROM $DEV_BASE
 
 # Install dumb-init

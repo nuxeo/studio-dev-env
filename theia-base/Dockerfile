@@ -1,7 +1,6 @@
 ARG THEIA_BUILDER
-FROM $THEIA_BUILDER AS builder
-
 ARG DEV_BASE
+FROM $THEIA_BUILDER AS builder
 FROM $DEV_BASE
 
 COPY --chown=nuxeo:nuxeo --from=builder /usr/local/theia /home/nuxeo

@@ -1,7 +1,6 @@
 ARG PROJECT_BASE
-FROM $PROJECT_BASE as base
-
 ARG DEV_BASE
+FROM $PROJECT_BASE as base
 FROM $DEV_BASE
 
 COPY --from=base --chown=nuxeo:nuxeo /docker-entrypoint.sh /
