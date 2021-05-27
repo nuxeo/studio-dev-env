@@ -48,6 +48,9 @@ if [ "$(ls -A ${PROJECT} >&/dev/null)" ]; then
   exit 1
 fi
 
+# Run fixuid
+eval $( fixuid -q )
+
 mkdir -p ${PROJECT} && cd ${PROJECT}
 
 # Bootstrap Project
@@ -85,6 +88,7 @@ realpath() {
 CWD=\$(realpath \$(dirname \$0))
 
 exec docker run --rm -it \
+  -u "\$(id -u):\$(id -g)" \
   -v "/var/run/docker.sock:/var/run/docker.sock" \
   --mount "type=bind,source=\${CWD},destination=${WORKSPACE}/${PROJECT}" \
   --mount "type=volume,source=${PROJECT}_m2repo,destination=/home/nuxeo/.m2/repository" \
@@ -104,8 +108,9 @@ realpath() {
 B64_PROJECT=$(echo -n "${STUDIO_PROJECT}" | md5)
 CWD=\$(realpath \$(dirname \$0))
 
-exec docker run --rm -it           \
-  -p 8080:8080
+exec docker run --rm -it \
+  -u "\$(id -u):\$(id -g)"         \
+  -p 8080:8080 \
   -v "/var/run/docker.sock:/var/run/docker.sock"  \
   --mount "type=bind,source=\${CWD},destination=${WORKSPACE}/${PROJECT}" \
   --mount "type=volume,source=${PROJECT}_m2repo,destination=/home/nuxeo/.m2/repository" \

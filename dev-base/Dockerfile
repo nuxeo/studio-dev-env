@@ -169,12 +169,22 @@ RUN dnf module install -y nodejs:${NODE_VERSION} \
 # Create Nuxeo user
 RUN umask 002 \
   && adduser -u 900 -G docker -c '' --shell /usr/bin/zsh nuxeo \
+  && chmod a+rX /home/nuxeo \
   && chmod g+s /home/nuxeo/ \
   && mkdir -p /home/nuxeo/.m2/repository \
   && mkdir -p /home/nuxeo/workspace \
   && mkdir -p /home/nuxeo/.vscode-server/extensions \
   && mkdir -p /home/nuxeo/.vscode-server-insiders/extensions \
   && echo "nuxeo ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/nopasswd
+
+# install fixuid
+RUN USER=nuxeo && \
+    GROUP=nuxeo && \
+    curl -SsL https://github.com/boxboat/fixuid/releases/download/v0.5/fixuid-0.5-linux-amd64.tar.gz | tar -C /usr/local/bin -xzf - && \
+    chown root:root /usr/local/bin/fixuid && \
+    chmod 4755 /usr/local/bin/fixuid && \
+    mkdir -p /etc/fixuid && \
+    printf "user: $USER\ngroup: $GROUP\n" > /etc/fixuid/config.yml
 
 VOLUME [ "/home/nuxeo/.m2/repository" ]
 WORKDIR /home/nuxeo
