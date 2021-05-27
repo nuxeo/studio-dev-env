@@ -1,8 +1,7 @@
 ARG PROJECT_BASE
-FROM $PROJECT_BASE as base
-
-# Final Image
 ARG THEIA_BASE
+FROM $PROJECT_BASE as base
+# Final Image
 FROM $THEIA_BASE
 
 COPY --from=base --chown=nuxeo:nuxeo /docker-entrypoint.sh /

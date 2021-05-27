@@ -1,8 +1,9 @@
 ARG PROJECT_BASE
+ARG CODE_SERVER_BASE
+
 FROM $PROJECT_BASE as base
 
 # Final Image
-ARG CODE_SERVER_BASE
 FROM $CODE_SERVER_BASE
 
 # Code Server additional extension
