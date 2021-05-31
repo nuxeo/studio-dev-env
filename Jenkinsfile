@@ -99,6 +99,8 @@ pipeline {
                     when {
                         not {
                             branch 'master'
+                        }
+                        not {
                             buildingTag()
                         }
                     }
