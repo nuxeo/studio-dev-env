@@ -168,20 +168,10 @@ RUN dnf module install -y nodejs:${NODE_VERSION} \
 
 # Create Nuxeo user
 RUN umask 002 \
-  && adduser -u 900 -G docker -c '' --shell /usr/bin/zsh nuxeo \
+  && adduser -u 900 -G docker,root -c '' --shell /usr/bin/zsh nuxeo \
   && chmod a+rX /home/nuxeo \
   && chmod g+s /home/nuxeo/ \
-  && install -d -o nuxeo -g nuxeo -m 775 /home/nuxeo/.m2 \
-  && install -d -o nuxeo -g nuxeo -m 775 /home/nuxeo/.m2/repository \
-  && install -d -o nuxeo -g nuxeo -m 775 /home/nuxeo/workspace \
-  && install -d -o nuxeo -g nuxeo -m 775 /home/nuxeo/.vscode-server \
-  && install -d -o nuxeo -g nuxeo -m 775 /home/nuxeo/.vscode-server/extensions \
-  && install -d -o nuxeo -g nuxeo -m 775 /home/nuxeo/.vscode-server-insiders \
-  && install -d -o nuxeo -g nuxeo -m 775 /home/nuxeo/.vscode-server-insiders/extensions \
   && echo "nuxeo ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/nopasswd
-
-# Remove useless CentOS Groups to limit fixuid GID conflit
-RUN for I in wheel cdrom dialout floppy games tape video lock audio; do groupdel "$I"; done;
 
 # install fixuid
 RUN USER=nuxeo && \
@@ -190,7 +180,11 @@ RUN USER=nuxeo && \
   chown root:root /usr/local/bin/fixuid && \
   chmod 4755 /usr/local/bin/fixuid && \
   mkdir -p /etc/fixuid && \
-  printf "user: $USER\ngroup: $GROUP\npaths: \n - /\n - /home/nuxeo/workspace\n - /home/nuxeo/.m2/repository\n - /home/nuxeo/.vscode-server/extensions\n" > /etc/fixuid/config.yml
+  printf "user: $USER\ngroup: $GROUP\npaths: \n - /\n" > /etc/fixuid/config.yml
+
+# Run last scrip to init volumes and cleanup groups
+COPY bootstrap-volumes.sh /tmp/bootstrap-volumes.sh
+RUN sh /tmp/bootstrap-volumes.sh && rm /tmp/bootstrap-volumes.sh
 
 VOLUME [ "/home/nuxeo/.m2/repository" ]
 WORKDIR /home/nuxeo
