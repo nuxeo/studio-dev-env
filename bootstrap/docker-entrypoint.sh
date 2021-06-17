@@ -28,13 +28,10 @@ read -p "- Instance CLID: " NUXEO_CLID
 echo -e "\nCreating projet ${1}..."
 
 PROJECT=${1}
-RANDOM_STR=$(
-  date +%s | sha256sum | base64 | head -c 8
-  echo
-)
 
 WORKSPACE=/home/nuxeo/workspace
 
+CLI_B_OPTS=${CLI_B_OPTS:-}
 CLI_BOOTSTRAP=${NUXEO_BOOTSTRAP:-multi-module single-module package}
 DOCKER_REPOSITORY=docker.packages.nuxeo.com/nos-dev
 
@@ -49,20 +46,20 @@ if [ "$(ls -A ${PROJECT} >&/dev/null)" ]; then
 fi
 
 # Run fixuid
-eval $( fixuid -q )
+eval $(fixuid -q)
 
 mkdir -p ${PROJECT} && cd ${PROJECT}
 
 # Bootstrap Project
 # TODO Disable end message, to KISS without displaying useless msg
 echo "Bootstraping a new Nuxeo Project..."
-bash -e -c "nuxeo -n b ${CLI_BOOTSTRAP}"
+bash -e -c "nuxeo -n b ${CLI_B_OPTS} ${CLI_BOOTSTRAP}"
 
 # Register Instance
 bash -c "nuxeo -b -n studio link --params.username=${STUDIO_USERNAME} --params.password=${STUDIO_TOKEN} --params.project=${STUDIO_PROJECT} --params.settings=false"
 
 # Create Docker Module
-bash -e -c "nuxeo -b -n b docker devcontainer --params.username=${STUDIO_USERNAME} --params.password=${STUDIO_TOKEN} --params.nexusUser=${NEXUS_USER} --params.nexusToken=${NEXUS_TOKEN}"
+bash -e -c "nuxeo -b -n b ${CLI_B_OPTS} docker devcontainer --params.username=${STUDIO_USERNAME} --params.password=${STUDIO_TOKEN} --params.nexusUser=${NEXUS_USER} --params.nexusToken=${NEXUS_TOKEN}"
 
 # Create .env.nuxeo-cli file
 cat >.env.nuxeo-cli <<EOF
@@ -129,7 +126,7 @@ echo "What to do next?"
 echo "  - Build the project Docker image and then open ${PROJECT} folder with VSCode then let the devcontainer magic happenning..."
 echo "  - Start Online IDE: ./${PROJECT}/start-ide.sh"
 echo "  - Start Dev Shell: ./${PROJECT}/start-shell.sh"
-echo "  - Use VS Code Remote-Container extension: ./${PROJECT}/start-shell.sh then \"Remote-Container: Attach to Running Container\" from VS Code"
+echo "  - Use VS Code Remote-Container extension: open project folder with VS Code then \"Remote-Container: Attach to Running Container\" from VS Code"
 echo "  - Use your prefered IDE: open ./${PROJECT}/pom.xml"
 echo ""
 
